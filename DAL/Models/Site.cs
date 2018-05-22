@@ -22,5 +22,8 @@ namespace DAL.Models
 
         public virtual ICollection<Account> Accounts{ get; set; }
 
+        public virtual User User{ get; set; }
+
+
     }
 }

@@ -19,5 +19,8 @@ namespace WCF.DataContracts
         public string Description { get; set; }
 
         public virtual ICollection<Account> Accounts { get; set; }
+
+        public virtual User User { get; set; }
+
     }
 }

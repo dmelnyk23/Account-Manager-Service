@@ -21,6 +21,7 @@ namespace DAL.Models
                 Login = "Sergiy",
                 Password = "Cheburek",
             };
+
             List<Account> acc = new List<Account>() { account, account2 }; 
             var site = new Site()
             {
@@ -29,7 +30,14 @@ namespace DAL.Models
                 Description = "Social network",
                 Accounts = acc
             };
-            List<Site> siteList = new List<Site>() { site };
+
+            var site2 = new Site()
+            {
+                Name = "Facebook",
+                Reference = "https://facebook.com",
+                Description = "Social network",
+            };
+            List<Site> siteList = new List<Site>() { site, site2 };
 
             var user = new User()
             {

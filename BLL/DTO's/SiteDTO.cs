@@ -21,5 +21,8 @@ namespace BLL.DTO_s
         public string Description { get; set; }
 
         public virtual ICollection<AccountDTO> Accounts { get; set; }
+
+        public virtual UserDTO User { get; set; }
+
     }
 }

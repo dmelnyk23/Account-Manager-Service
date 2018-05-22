@@ -19,10 +19,11 @@ namespace WCF
         void AddUser(string login, string password);
 
         [OperationContract]
-        void DeleteUser(User user);
+        string[] GetAllSites(string login);
+
 
         [OperationContract]
-        Site[] GetAllSites();
+        void DeleteUser(User user);
 
         [OperationContract]
         Account[] GetAllAccounts();

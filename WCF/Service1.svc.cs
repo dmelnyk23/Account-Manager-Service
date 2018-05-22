@@ -73,27 +73,9 @@ namespace WCF
             _bll.DeleteUser(userDTO);
         }
 
-        public Site[] GetAllSites()
+        public string[] GetAllSites(string login)
         {
-            var siteBLL = _bll.GetAllSites();
-            List<Site> sitesDC = new List<Site>();
-            foreach (var item in siteBLL)
-            {
-                Site temp = new Site
-                {
-                    Name = item.Name,
-                    Description = item.Description,
-                    Reference = item.Reference,
-                    Accounts = item.Accounts
-                    .Select(a => new Account
-                    {
-                        Login = a.Login,
-                        Password = a.Password
-                    }).ToList()
-                };
-                sitesDC.Add(temp);
-            }
-            return sitesDC.ToArray();
+            return _bll.GetAllSites(login).ToArray();
         }
 
         public Account[] GetAllAccounts()

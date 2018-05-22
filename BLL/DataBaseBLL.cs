@@ -39,6 +39,21 @@ namespace BLL
             return userDAL;
         }
 
+        public List<string> GetAllSites(string login)
+        {
+            var siteDAL = _dal.GetAllSites(login);
+            List<string> sitesNames = new List<string>();
+            foreach (var item in siteDAL)
+            {
+                sitesNames.Add(item.Name);
+            }
+            return sitesNames;
+        }
+
+
+
+
+
         public void AddUser(string login, string password)
         {
             User userDAL = new User
@@ -67,30 +82,6 @@ namespace BLL
             _dal.DeleteUser(userDAL);
         }
 
-        public List<SiteDTO> GetAllSites()
-        {
-            var siteDAL = _dal.GetAllSites();
-            List<SiteDTO> sitesDTOs = new List<SiteDTO>();
-            foreach (var item in siteDAL)
-            {
-                SiteDTO temp = new SiteDTO
-                {
-                    ID = item.ID,
-                    Name = item.Name,
-                    Description = item.Description,
-                    Reference = item.Reference,
-                    Accounts = item.Accounts
-                    .Select(a => new AccountDTO
-                    {
-                        ID = a.ID,
-                        Login = a.Login,
-                        Password = a.Password
-                    }).ToList()
-                };
-                sitesDTOs.Add(temp);
-            }
-            return sitesDTOs;
-        }
 
         public List<AccountDTO> GetAllAccounts()
         {
@@ -115,6 +106,7 @@ namespace BLL
             {
                 Login = account.Login,
                 Password = account.Password,
+                
             };
             _dal.AddAccount(accountDAL);
         }

@@ -25,6 +25,11 @@ namespace DAL
             _ctx.SaveChanges();
         }
 
+        public List<Site> GetAllSites(string login)
+        {
+            return _ctx.Sites.Where(x => x.User.Login == login).ToList();
+        }
+
 
         public void DeleteUser(User user)
         {
@@ -33,10 +38,6 @@ namespace DAL
             _ctx.SaveChanges();
         }
 
-        public List<Site> GetAllSites()
-        {
-            return _ctx.Sites.ToList();
-        }
 
         public List<Account> GetAllAccounts()
         {
