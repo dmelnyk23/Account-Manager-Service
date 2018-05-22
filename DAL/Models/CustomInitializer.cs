@@ -26,7 +26,7 @@ namespace DAL.Models
             var site = new Site()
             {
                 Name = "Vkontakte",
-                Reference = "https://vk.com",
+                Reference = "vk.com",
                 Description = "Social network",
                 Accounts = acc
             };
@@ -34,7 +34,7 @@ namespace DAL.Models
             var site2 = new Site()
             {
                 Name = "Facebook",
-                Reference = "https://facebook.com",
+                Reference = "facebook.com",
                 Description = "Social network",
             };
             List<Site> siteList = new List<Site>() { site, site2 };

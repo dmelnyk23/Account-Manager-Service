@@ -25,10 +25,11 @@ namespace DAL
             _ctx.SaveChanges();
         }
 
-        public List<Site> GetAllSites(string login)
+        public List<Site> GetAllSitesByLogin(string login)
         {
             return _ctx.Sites.Where(x => x.User.Login == login).ToList();
         }
+
 
 
         public void DeleteUser(User user)

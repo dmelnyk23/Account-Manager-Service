@@ -73,10 +73,18 @@ namespace WCF
             _bll.DeleteUser(userDTO);
         }
 
-        public string[] GetAllSites(string login)
+
+        public string[] GetAllSitesNamesByLogin(string login)
         {
-            return _bll.GetAllSites(login).ToArray();
+            return _bll.GetAllSitesNamesByLogin(login).ToArray();
         }
+
+        public string[] GetAllSitesReferencesByLogin(string login)
+        {
+            return _bll.GetAllSitesReferencesByLogin(login).ToArray();
+        }
+
+
 
         public Account[] GetAllAccounts()
         {

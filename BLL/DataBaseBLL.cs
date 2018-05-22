@@ -39,15 +39,26 @@ namespace BLL
             return userDAL;
         }
 
-        public List<string> GetAllSites(string login)
+        public List<string> GetAllSitesNamesByLogin(string login)
         {
-            var siteDAL = _dal.GetAllSites(login);
+            var siteDAL = _dal.GetAllSitesByLogin(login);
             List<string> sitesNames = new List<string>();
             foreach (var item in siteDAL)
             {
                 sitesNames.Add(item.Name);
             }
             return sitesNames;
+        }
+
+        public List<string> GetAllSitesReferencesByLogin(string login)
+        {
+            var siteDAL = _dal.GetAllSitesByLogin(login);
+            List<string> sitesReferences = new List<string>();
+            foreach (var item in siteDAL)
+            {
+                sitesReferences.Add(item.Reference);
+            }
+            return sitesReferences;
         }
 
 
