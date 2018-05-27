@@ -46,6 +46,49 @@ namespace WCF
             return userDC;
         }
 
+        public User GetUserByLogin(string login)
+        {
+            var userDAL = _bll.GetUserByLogin(login);
+            User user = new User
+            {
+                Login = userDAL.Login,
+                Password = userDAL.Password
+            };
+
+            return user;
+        }
+
+        public string[] GetAllSitesNamesByLogin(string login)
+        {
+            return _bll.GetAllSitesNamesByLogin(login).ToArray();
+        }
+
+        public string[] GetAllSitesReferencesByLogin(string login)
+        {
+            return _bll.GetAllSitesReferencesByLogin(login).ToArray();
+        }
+
+        public void AddSite(string userLogin, string name, string reference, string description,
+                                      string login, string password, bool addAcc)
+        {
+            _bll.AddSite(userLogin, name, reference, description, login, password, addAcc);
+        }
+
+        public void AddAccount(string siteName, string accountLogin, string accountPassword)
+        {
+            _bll.AddAccount(siteName, accountLogin, accountPassword);
+        }
+
+        public void DeleteSite(string siteName)
+        {
+            _bll.DeleteSite(siteName);
+        }
+
+
+
+
+
+
         public void AddUser(string login, string password)
         {
             UserDTO userDTO = new UserDTO
@@ -74,16 +117,6 @@ namespace WCF
         }
 
 
-        public string[] GetAllSitesNamesByLogin(string login)
-        {
-            return _bll.GetAllSitesNamesByLogin(login).ToArray();
-        }
-
-        public string[] GetAllSitesReferencesByLogin(string login)
-        {
-            return _bll.GetAllSitesReferencesByLogin(login).ToArray();
-        }
-
 
 
         public Account[] GetAllAccounts()
@@ -102,33 +135,7 @@ namespace WCF
             return accountsDC.ToArray();
         }
 
-        public void AddAccount(Account account)
-        {
-            AccountDTO accountDTO = new AccountDTO
-            {
-                Login = account.Login,
-                Password = account.Password,
-            };
-            _bll.AddAccount(accountDTO);
-        }
-
-        public void AddSite(Site site)
-        {
-            SiteDTO siteDTO = new SiteDTO
-            {
-                Name = site.Name,
-                Description = site.Description,
-                Reference = site.Reference,
-                Accounts = site.Accounts
-                    .Select(a => new AccountDTO
-                    {
-                        //ID = a.ID,
-                        Login = a.Login,
-                        Password = a.Password
-                    }).ToList()
-            };
-            _bll.AddSite(siteDTO);
-        }
+        
 
         public void DeleteAccount(Account account)
         {
@@ -137,24 +144,8 @@ namespace WCF
                 Login = account.Login,
                 Password = account.Password,
             };
-            _bll.DeleteAccount(accountDTO);
+         //   _bll.DeleteAccount(accountDTO);
         }
 
-        public void DeleteSite(Site site)
-        {
-            SiteDTO siteDTO = new SiteDTO
-            {
-                Name = site.Name,
-                Description = site.Description,
-                Reference = site.Reference,
-                Accounts = site.Accounts
-                    .Select(a => new AccountDTO
-                    {
-                        Login = a.Login,
-                        Password = a.Password
-                    }).ToList()
-            };
-            _bll.DeleteSite(siteDTO);
-        }
     }
 }

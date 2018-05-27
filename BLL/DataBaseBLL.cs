@@ -39,6 +39,19 @@ namespace BLL
             return userDAL;
         }
 
+        public UserDTO GetUserByLogin(string login)
+        {
+            var userDAL = _dal.GetUserByLogin(login);
+            UserDTO userDTO = new UserDTO
+            {
+                Login = userDAL.Login,
+                Password = userDAL.Password
+            };
+
+            return userDTO;
+
+        }
+        
         public List<string> GetAllSitesNamesByLogin(string login)
         {
             var siteDAL = _dal.GetAllSitesByLogin(login);
@@ -61,6 +74,81 @@ namespace BLL
             return sitesReferences;
         }
 
+        public void AddSite(string userLogin, string name, string reference, string description,
+                                      string login, string password, bool addAcc)
+        {
+            var user = _dal.GetUserByLogin(userLogin);
+            if (addAcc == true)
+            {
+                Account acc = new Account()
+                {
+                    Login = login,
+                    Password = password
+                };
+                List<Account> listAcc = new List<Account>() { acc };
+                Site siteDal = new Site()
+                {
+                    Name = name,
+                    Reference = reference,
+                    Description = description,
+                    Accounts = listAcc,
+                    User = user
+
+                };
+                _dal.AddSite(siteDal);
+            }
+            else
+            {
+                Site siteDal = new Site()
+                {
+                    Name = name,
+                    Reference = reference,
+                    Description = description,
+                    User = user
+                };
+                _dal.AddSite(siteDal);
+            }
+        }
+
+        public void AddAccount(string siteName, string accountLogin, string accountPassword)
+        {
+            var siteDAL = _dal.GetSiteByName(siteName);
+            Account accountDAL = new Account
+            {
+                Login = accountLogin,
+                Password = accountPassword,
+                Site = siteDAL
+
+            };
+            _dal.AddAccount(accountDAL);
+        }
+
+        public void DeleteSite(string siteName)
+        {
+
+            var site = _dal.GetSiteByName(siteName);
+            var accounts = _dal.GetAccountBySiteID(site.ID);
+            Site siteDAL = new Site
+            {
+                Name = site.Name,
+                Description = site.Description,
+                Reference = site.Reference,
+                Accounts = site.Accounts
+                    .Select(a => new Account
+                    {
+                        ID = a.ID,
+                        Login = a.Login,
+                        Password = a.Password
+                    }).ToList()
+            };
+
+            foreach (var item in accounts)
+            {
+                _dal.DeleteAccount(item);
+            }
+
+            _dal.DeleteSite(siteDAL);
+        }
 
 
 
@@ -111,61 +199,8 @@ namespace BLL
             return accountsDTOs;
         }
 
-        public void AddAccount(AccountDTO account)
-        {
-            Account accountDAL = new Account
-            {
-                Login = account.Login,
-                Password = account.Password,
-                
-            };
-            _dal.AddAccount(accountDAL);
-        }
 
-        public void AddSite(SiteDTO site)
-        {
-            Site siteDAL = new Site
-            {
-                Name = site.Name,
-                Description = site.Description,
-                Reference = site.Reference,
-                Accounts = site.Accounts
-                    .Select(a => new Account
-                    {
-                        ID = a.ID,
-                        Login = a.Login,
-                        Password = a.Password
-                    }).ToList()
-            };
-            _dal.AddSite(siteDAL);
-        }
 
-        public void DeleteAccount(AccountDTO account)
-        {
-            Account accountDAL = new Account
-            {
-                Login = account.Login,
-                Password = account.Password,
-            };
-            _dal.DeleteAccount(accountDAL);
-        }
 
-        public void DeleteSite(SiteDTO site)
-        {
-            Site siteDAL = new Site
-            {
-                Name = site.Name,
-                Description = site.Description,
-                Reference = site.Reference,
-                Accounts = site.Accounts
-                    .Select(a => new Account
-                    {
-                        ID = a.ID,
-                        Login = a.Login,
-                        Password = a.Password
-                    }).ToList()
-            };
-            _dal.DeleteSite(siteDAL);
-        }
     }
 }

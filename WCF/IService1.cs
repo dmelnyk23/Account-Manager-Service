@@ -19,10 +19,24 @@ namespace WCF
         void AddUser(string login, string password);
 
         [OperationContract]
+        User GetUserByLogin(string login);
+
+        [OperationContract]
         string[] GetAllSitesNamesByLogin(string login);
 
         [OperationContract]
         string[] GetAllSitesReferencesByLogin(string login);
+
+        [OperationContract]
+        void AddSite(string userLogin, string name, string reference, string description,
+                                      string login, string password, bool addAcc);
+        
+        [OperationContract]
+        void AddAccount(string siteName, string accountLogin, string accountPassword);
+
+        [OperationContract]
+        void DeleteSite(string siteName);
+
 
         [OperationContract]
         void DeleteUser(User user);
@@ -30,17 +44,11 @@ namespace WCF
         [OperationContract]
         Account[] GetAllAccounts();
 
-        [OperationContract]
-        void AddAccount(Account account);
 
-        [OperationContract]
-        void AddSite(Site site);
 
         [OperationContract]
         void DeleteAccount(Account account);
 
-        [OperationContract]
-        void DeleteSite(Site site);
     }
 
 }
